@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pie.ShaderCompiler", "Pie\P
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloQuad", "HelloQuad\HelloQuad.csproj", "{22EB6C0A-8BAA-4472-BE8E-D7129BBA0688}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloSilk", "HelloSilk\HelloSilk.csproj", "{B0A5606E-F4D7-4883-875A-B7E823297C2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pie.Extensions.SilkWindowing", "Pie\Pie.Extensions.SilkWindowing\Pie.Extensions.SilkWindowing.csproj", "{2E306EB9-C46F-47FC-9AC8-225248C01886}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +46,13 @@ Global
 		{22EB6C0A-8BAA-4472-BE8E-D7129BBA0688}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22EB6C0A-8BAA-4472-BE8E-D7129BBA0688}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22EB6C0A-8BAA-4472-BE8E-D7129BBA0688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0A5606E-F4D7-4883-875A-B7E823297C2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0A5606E-F4D7-4883-875A-B7E823297C2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0A5606E-F4D7-4883-875A-B7E823297C2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0A5606E-F4D7-4883-875A-B7E823297C2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E306EB9-C46F-47FC-9AC8-225248C01886}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E306EB9-C46F-47FC-9AC8-225248C01886}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E306EB9-C46F-47FC-9AC8-225248C01886}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E306EB9-C46F-47FC-9AC8-225248C01886}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
