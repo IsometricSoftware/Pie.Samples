@@ -12,6 +12,8 @@ namespace PieSamples;
 public class SampleApplication : IDisposable
 {
     private WindowSettings _settings;
+    private InputState _state;
+    private Vector2 _prevPos;
 
     public Window Window;
 
@@ -42,9 +44,13 @@ public class SampleApplication : IDisposable
         
         Initialize();
 
+        _state = Window.ProcessEvents();
+
         while (!Window.ShouldClose)
         {
-            Window.ProcessEvents();
+            _prevPos = _state.MousePosition;
+            _state = Window.ProcessEvents();
+            DeltaMousePosition = _state.MousePosition - _prevPos;
 
             float dt = (float) dtCounter.Elapsed.TotalSeconds;
             Update(dt);
@@ -68,9 +74,17 @@ public class SampleApplication : IDisposable
         return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + path;
     }
 
+    public bool IsKeyDown(Keys key) => _state.IsKeyDown(key);
+
+    public Vector2 MousePosition => _state.MousePosition;
+    
+    public Vector2 DeltaMousePosition { get; private set; }
+
+    public float Clamp(float value, float min, float max) => value <= min ? min : value >= max ? max : value;
+
     public virtual void Dispose()
     {
-        Window.Dispose();
         Device.Dispose();
+        Window.Dispose();
     }
 }

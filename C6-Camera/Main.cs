@@ -5,55 +5,13 @@ using System.Reflection;
 using Pie;
 using Pie.ShaderCompiler;
 using Pie.Utils;
+using Pie.Windowing;
 using Silk.NET.Maths;
 
 namespace PieSamples;
 
 public class Main : SampleApplication
 {
-    private readonly VertexPositionTexture[] _vertices =
-    {
-        new VertexPositionTexture(new Vector3(-0.5f, 0.5f, -0.5f), new Vector2(0, 0)),
-        new VertexPositionTexture(new Vector3(0.5f, 0.5f, -0.5f), new Vector2(1, 0)),
-        new VertexPositionTexture(new Vector3(0.5f, 0.5f, 0.5f), new Vector2(1, 1)),
-        new VertexPositionTexture(new Vector3(-0.5f, 0.5f, 0.5f), new Vector2(0, 1)),
-
-        new VertexPositionTexture(new Vector3(-0.5f, -0.5f, 0.5f), new Vector2(0, 0)),
-        new VertexPositionTexture(new Vector3(0.5f, -0.5f, 0.5f), new Vector2(1, 0)),
-        new VertexPositionTexture(new Vector3(0.5f, -0.5f, -0.5f), new Vector2(1, 1)),
-        new VertexPositionTexture(new Vector3(-0.5f, -0.5f, -0.5f), new Vector2(0, 1)),
-
-        new VertexPositionTexture(new Vector3(-0.5f, 0.5f, -0.5f), new Vector2(0, 0)),
-        new VertexPositionTexture(new Vector3(-0.5f, 0.5f, 0.5f), new Vector2(1, 0)),
-        new VertexPositionTexture(new Vector3(-0.5f, -0.5f, 0.5f), new Vector2(1, 1)),
-        new VertexPositionTexture(new Vector3(-0.5f, -0.5f, -0.5f), new Vector2(0, 1)),
-
-        new VertexPositionTexture(new Vector3(0.5f, 0.5f, 0.5f), new Vector2(0, 0)),
-        new VertexPositionTexture(new Vector3(0.5f, 0.5f, -0.5f), new Vector2(1, 0)),
-        new VertexPositionTexture(new Vector3(0.5f, -0.5f, -0.5f), new Vector2(1, 1)),
-        new VertexPositionTexture(new Vector3(0.5f, -0.5f, 0.5f), new Vector2(0, 1)),
-
-        new VertexPositionTexture(new Vector3(0.5f, 0.5f, -0.5f), new Vector2(0, 0)),
-        new VertexPositionTexture(new Vector3(-0.5f, 0.5f, -0.5f), new Vector2(1, 0)),
-        new VertexPositionTexture(new Vector3(-0.5f, -0.5f, -0.5f), new Vector2(1, 1)),
-        new VertexPositionTexture(new Vector3(0.5f, -0.5f, -0.5f), new Vector2(0, 1)),
-
-        new VertexPositionTexture(new Vector3(-0.5f, 0.5f, 0.5f), new Vector2(0, 0)),
-        new VertexPositionTexture(new Vector3(0.5f, 0.5f, 0.5f), new Vector2(1, 0)),
-        new VertexPositionTexture(new Vector3(0.5f, -0.5f, 0.5f), new Vector2(1, 1)),
-        new VertexPositionTexture(new Vector3(-0.5f, -0.5f, 0.5f), new Vector2(0, 1))
-    };
-
-    private readonly uint[] _indices =
-    {
-        0, 1, 2, 0, 2, 3,
-        4, 5, 6, 4, 6, 7,
-        8, 9, 10, 8, 10, 11,
-        12, 13, 14, 12, 14, 15,
-        16, 17, 18, 16, 18, 19,
-        20, 21, 22, 20, 22, 23
-    };
-
     private Vector3[] _cubePos =
     {
         new Vector3(0.0f, 0.0f, 0.0f),
@@ -118,16 +76,18 @@ void main()
 
     private DepthState _depthState;
 
+    private Camera _camera;
+
     public override void Initialize()
     {
-        _vertexBuffer = Device.CreateBuffer(BufferType.VertexBuffer, _vertices);
-        _indexBuffer = Device.CreateBuffer(BufferType.IndexBuffer, _indices);
+        _vertexBuffer = Device.CreateBuffer(BufferType.VertexBuffer, Cube.Vertices);
+        _indexBuffer = Device.CreateBuffer(BufferType.IndexBuffer, Cube.Indices);
 
         _shader = Device.CreateCrossPlatformShader(
             new ShaderAttachment(ShaderStage.Vertex, VertexShader),
             new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
 
-        _inputLayout = Device.CreateInputLayout(
+        _inputLayout = Device.CreateInputLayout(VertexPositionTextureNormal.SizeInBytes,
             new InputLayoutDescription("aPosition", AttributeType.Vec3),
             new InputLayoutDescription("aTexCoords", AttributeType.Vec2));
 
@@ -140,12 +100,42 @@ void main()
             TextureSample.Linear, true, 0);
 
         _projViewTransform = new ProjViewTransform();
-        _projViewTransform.Projection = Matrix4x4.CreatePerspectiveFieldOfView(45 * (MathF.PI / 180),
-            Window.Size.Width / (float) Window.Size.Height, 0.1f, 100.0f);
-        _projViewTransform.View = Matrix4x4.CreateLookAt(new Vector3(0, 0, 3), Vector3.Zero, Vector3.UnitY);
         _transformBuffer = Device.CreateBuffer(BufferType.UniformBuffer, _projViewTransform, true);
 
         _depthState = Device.CreateDepthState(DepthStateDescription.LessEqual);
+
+        _camera = new Camera(45, Window.Size.Width / (float) Window.Size.Height);
+        _camera.Position = new Vector3(0, 0, -3);
+
+        Window.MouseState = MouseState.Locked;
+    }
+
+    public override void Update(float dt)
+    {
+        base.Update(dt);
+
+        const float camSpeed = 20;
+        const float mouseSpeed = 0.01f;
+
+        if (IsKeyDown(Keys.W))
+            _camera.Position += _camera.Forward * camSpeed * dt;
+        if (IsKeyDown(Keys.S))
+            _camera.Position -= _camera.Forward * camSpeed * dt;
+        if (IsKeyDown(Keys.A))
+            _camera.Position -= _camera.Right * camSpeed * dt;
+        if (IsKeyDown(Keys.D))
+            _camera.Position += _camera.Right * camSpeed * dt;
+
+        _camera.Rotation.X -= DeltaMousePosition.X * mouseSpeed;
+        _camera.Rotation.Y -= DeltaMousePosition.Y * mouseSpeed;
+
+        _camera.Rotation.Y = Clamp(_camera.Rotation.Y, -MathF.PI / 2, MathF.PI / 2);
+
+        _projViewTransform.Projection = _camera.ProjectionMatrix;
+        _projViewTransform.View = _camera.ViewMatrix;
+
+        if (IsKeyDown(Keys.Escape))
+            Window.ShouldClose = true;
     }
 
     public override void Draw(float dt)
@@ -161,12 +151,11 @@ void main()
 
         for (int i = 0; i < _cubePos.Length; i++)
         {
-            // Do this normalize stupidity because system.numerics hates rotation
             Quaternion rotation = Quaternion.CreateFromAxisAngle(new Vector3(1.0f, 0.3f, 0.5f), 20.0f * i);
             _projViewTransform.Transform = Matrix4x4.CreateFromQuaternion(Quaternion.Normalize(rotation)) *
                                            Matrix4x4.CreateTranslation(_cubePos[i]);
             Device.UpdateBuffer(_transformBuffer, 0, _projViewTransform);
-            Device.Draw((uint) _indices.Length);
+            Device.Draw((uint) Cube.Indices.Length);
         }
     }
 

@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4-Transformations", "C4-Tr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C5-CoordinateSystems", "C5-CoordinateSystems\C5-CoordinateSystems.csproj", "{1AAFBEF0-2F3E-4DD4-97C3-C1BE863FCAD3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C6-Camera", "C6-Camera\C6-Camera.csproj", "{4557C104-88E0-4903-B8FC-3A65282816E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,5 +80,9 @@ Global
 		{1AAFBEF0-2F3E-4DD4-97C3-C1BE863FCAD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AAFBEF0-2F3E-4DD4-97C3-C1BE863FCAD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AAFBEF0-2F3E-4DD4-97C3-C1BE863FCAD3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4557C104-88E0-4903-B8FC-3A65282816E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4557C104-88E0-4903-B8FC-3A65282816E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4557C104-88E0-4903-B8FC-3A65282816E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4557C104-88E0-4903-B8FC-3A65282816E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
