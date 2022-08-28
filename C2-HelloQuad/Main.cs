@@ -69,7 +69,7 @@ void main()
             new InputLayoutDescription("aColor", AttributeType.Vec4));
     }
 
-    public override void Draw()
+    public override void Draw(float dt)
     {
         Device.SetShader(_shader);
         Device.SetPrimitiveType(PrimitiveType.TriangleList);

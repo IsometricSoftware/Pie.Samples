@@ -1,6 +1,9 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
+using System.Numerics;
+using System.Reflection;
 using Pie;
 using Pie.Windowing;
 
@@ -19,16 +22,16 @@ public class SampleApplication : IDisposable
         _settings = new WindowSettings()
         {
             Title = title,
-            Size = new Size(1280, 720),
+            Size = new Size(800, 600),
             Resizable = true
         };
     }
 
     public virtual void Initialize() { }
 
-    public virtual void Update(float deltaTime) { }
+    public virtual void Update(float dt) { }
 
-    public virtual void Draw() { }
+    public virtual void Draw(float dt) { }
 
     public void Run()
     {
@@ -42,12 +45,14 @@ public class SampleApplication : IDisposable
         while (!Window.ShouldClose)
         {
             Window.ProcessEvents();
+
+            float dt = (float) dtCounter.Elapsed.TotalSeconds;
+            Update(dt);
+
+            Device.Clear(new Vector4(0.2f, 0.3f, 0.3f, 1.0f), ClearFlags.Depth | ClearFlags.Stencil);
+            Draw(dt);
             
-            Update((float) dtCounter.Elapsed.TotalSeconds);
             dtCounter.Restart();
-            
-            Device.Clear(Color.CornflowerBlue, ClearFlags.Depth | ClearFlags.Stencil);
-            Draw();
             
             Device.Present(1);
         }
@@ -56,6 +61,11 @@ public class SampleApplication : IDisposable
     private void WindowOnResize(Size size)
     {
         Device.ResizeSwapchain(size);
+    }
+
+    public string GetFullPath(string path)
+    {
+        return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + path;
     }
 
     public virtual void Dispose()

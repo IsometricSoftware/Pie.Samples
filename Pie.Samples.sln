@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3-Textures", "C3-Textures\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{418D378F-D6B0-4A45-B43D-1B4B547706BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C4-Transformations", "C4-Transformations\C4-Transformations.csproj", "{D3486ECC-367E-4274-ABF1-D4F3E32B522A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -66,5 +68,9 @@ Global
 		{418D378F-D6B0-4A45-B43D-1B4B547706BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{418D378F-D6B0-4A45-B43D-1B4B547706BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{418D378F-D6B0-4A45-B43D-1B4B547706BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3486ECC-367E-4274-ABF1-D4F3E32B522A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3486ECC-367E-4274-ABF1-D4F3E32B522A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3486ECC-367E-4274-ABF1-D4F3E32B522A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3486ECC-367E-4274-ABF1-D4F3E32B522A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

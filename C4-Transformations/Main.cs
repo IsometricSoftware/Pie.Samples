@@ -32,9 +32,14 @@ layout (location = 1) in vec2 aTexCoords;
 
 layout (location = 0) out vec2 frag_texCoords;
 
+layout (binding = 0) uniform Transform
+{
+    mat4 uTransform;
+};
+
 void main()
 {
-    gl_Position = vec4(aPosition, 1.0);
+    gl_Position = uTransform * vec4(aPosition, 1.0);
     frag_texCoords = aTexCoords;
 }";
 
@@ -45,8 +50,8 @@ layout (location = 0) in vec2 frag_texCoords;
 
 layout (location = 0) out vec4 out_color;
 
-layout (binding = 0) uniform sampler2D uTexture1;
-layout (binding = 1) uniform sampler2D uTexture2;
+layout (binding = 1) uniform sampler2D uTexture1;
+layout (binding = 2) uniform sampler2D uTexture2;
 
 void main()
 {
@@ -62,6 +67,8 @@ void main()
 
     private Texture _texture1;
     private Texture _texture2;
+
+    private GraphicsBuffer _transformBuffer;
 
     public override void Initialize()
     {
@@ -79,17 +86,28 @@ void main()
         Bitmap b1 = new Bitmap(GetFullPath("Content/Textures/container.png"));
         _texture1 = Device.CreateTexture(b1.Size.Width, b1.Size.Height, PixelFormat.R8G8B8A8_UNorm, b1.Data,
             TextureSample.Linear, true, 0);
-
+        
         Bitmap b2 = new Bitmap(GetFullPath("Content/Textures/awesomeface.png"));
         _texture2 = Device.CreateTexture(b2.Size.Width, b2.Size.Height, PixelFormat.R8G8B8A8_UNorm, b2.Data,
             TextureSample.Linear, true, 0);
+
+        _transformBuffer = Device.CreateBuffer(BufferType.UniformBuffer, Matrix4x4.Identity, true);
     }
+
+    private float _time;
 
     public override void Draw(float dt)
     {
+        _time += dt;
+
+        Matrix4x4 transform = Matrix4x4.CreateRotationZ(_time) * 
+                              Matrix4x4.CreateTranslation(0.5f, -0.5f, 0.0f);
+        Device.UpdateBuffer(_transformBuffer, 0, transform);
+        
         Device.SetShader(_shader);
-        Device.SetTexture(0, _texture1);
-        Device.SetTexture(1, _texture2);
+        Device.SetUniformBuffer(0, _transformBuffer);
+        Device.SetTexture(1, _texture1);
+        Device.SetTexture(2, _texture2);
         Device.SetPrimitiveType(PrimitiveType.TriangleList);
         Device.SetVertexBuffer(_vertexBuffer, _inputLayout);
         Device.SetIndexBuffer(_indexBuffer);
