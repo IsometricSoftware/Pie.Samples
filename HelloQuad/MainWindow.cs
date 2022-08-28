@@ -84,6 +84,7 @@ void main()
         _device.Clear(Color.CornflowerBlue);
         
         _device.SetShader(_shader);
+        _device.SetPrimitiveType(PrimitiveType.TriangleList);
         _device.SetVertexBuffer(_vertexBuffer, _inputLayout);
         _device.SetIndexBuffer(_indexBuffer);
         _device.Draw((uint) _indices.Length);
@@ -91,7 +92,7 @@ void main()
 
     private void WindowOnResize(Size size)
     {
-        _device.ResizeMainFramebuffer(size);
+        _device.ResizeSwapchain(size);
     }
     
     public void Run()

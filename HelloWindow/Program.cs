@@ -9,7 +9,7 @@ WindowSettings settings = new WindowSettings()
     Resizable = true
 };
 Window window = Window.CreateWithGraphicsDevice(settings, out GraphicsDevice device);
-window.Resize += size => device.ResizeMainFramebuffer(size);
+window.Resize += size => device.ResizeSwapchain(size);
 
 while (!window.ShouldClose)
 {

@@ -5,7 +5,7 @@ using Pie.Windowing;
 WindowSettings settings = new WindowSettings()
 {
     Size = new Size(1280, 720),
-    Title = "Hello world!",
+    Title = "Hello quad!",
     Resizable = true
 };
 

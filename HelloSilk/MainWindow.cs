@@ -43,7 +43,7 @@ public class MainWindow : IDisposable
     
     private void Resize(Vector2D<int> obj)
     {
-        _device.ResizeMainFramebuffer(new Size(obj.X, obj.Y));
+        _device.ResizeSwapchain(new Size(obj.X, obj.Y));
     }
 
     public void Run()
