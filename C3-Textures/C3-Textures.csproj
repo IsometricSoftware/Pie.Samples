@@ -5,12 +5,11 @@
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>disable</Nullable>
+        <RootNamespace>PieSamples</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Pie\Pie.ShaderCompiler\Pie.ShaderCompiler.csproj" />
-      <ProjectReference Include="..\Pie\Pie.Utils\Pie.Utils.csproj" />
-      <ProjectReference Include="..\Pie\Pie.Windowing\Pie.Windowing.csproj" />
+      <ProjectReference Include="..\Common\Common.csproj" />
     </ItemGroup>
 
 </Project>

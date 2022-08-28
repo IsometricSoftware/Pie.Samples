@@ -5,7 +5,7 @@ using Pie.Extensions.SilkWindowing;
 using Silk.NET.Maths;
 using Silk.NET.Windowing;
 
-namespace HelloSilk;
+namespace PieSamples;
 
 public class MainWindow : IDisposable
 {

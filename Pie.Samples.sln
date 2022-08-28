@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWindow", "HelloWindow\HelloWindow.csproj", "{D8C2E94A-70EB-42E9-9872-1F081210E0FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C1-HelloWindow", "C1-HelloWindow\C1-HelloWindow.csproj", "{D8C2E94A-70EB-42E9-9872-1F081210E0FA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pie.Windowing", "Pie\Pie.Windowing\Pie.Windowing.csproj", "{9591225F-686F-44AE-ACA0-289B2483110F}"
 EndProject
@@ -10,11 +10,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pie.Utils", "Pie\Pie.Utils\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pie.ShaderCompiler", "Pie\Pie.ShaderCompiler\Pie.ShaderCompiler.csproj", "{9E9B7135-8116-4DFA-815A-BE882E847CA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloQuad", "HelloQuad\HelloQuad.csproj", "{22EB6C0A-8BAA-4472-BE8E-D7129BBA0688}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C2-HelloQuad", "C2-HelloQuad\C2-HelloQuad.csproj", "{22EB6C0A-8BAA-4472-BE8E-D7129BBA0688}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloSilk", "HelloSilk\HelloSilk.csproj", "{B0A5606E-F4D7-4883-875A-B7E823297C2E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C1.1-HelloSilk", "C1.1-HelloSilk\C1.1-HelloSilk.csproj", "{B0A5606E-F4D7-4883-875A-B7E823297C2E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pie.Extensions.SilkWindowing", "Pie\Pie.Extensions.SilkWindowing\Pie.Extensions.SilkWindowing.csproj", "{2E306EB9-C46F-47FC-9AC8-225248C01886}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "C3-Textures", "C3-Textures\C3-Textures.csproj", "{DF4D49E7-FD50-4E90-A773-866E3B514C62}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{418D378F-D6B0-4A45-B43D-1B4B547706BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,5 +58,13 @@ Global
 		{2E306EB9-C46F-47FC-9AC8-225248C01886}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E306EB9-C46F-47FC-9AC8-225248C01886}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E306EB9-C46F-47FC-9AC8-225248C01886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF4D49E7-FD50-4E90-A773-866E3B514C62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF4D49E7-FD50-4E90-A773-866E3B514C62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF4D49E7-FD50-4E90-A773-866E3B514C62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF4D49E7-FD50-4E90-A773-866E3B514C62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{418D378F-D6B0-4A45-B43D-1B4B547706BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{418D378F-D6B0-4A45-B43D-1B4B547706BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{418D378F-D6B0-4A45-B43D-1B4B547706BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{418D378F-D6B0-4A45-B43D-1B4B547706BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

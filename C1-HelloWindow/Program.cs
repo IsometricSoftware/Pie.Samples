@@ -5,7 +5,7 @@ using Pie.Windowing;
 WindowSettings settings = new WindowSettings()
 {
     Size = new Size(1280, 720),
-    Title = "Hello world!",
+    Title = "Learn Pie: Chapter 1 - Basic window",
     Resizable = true
 };
 Window window = Window.CreateWithGraphicsDevice(settings, out GraphicsDevice device);

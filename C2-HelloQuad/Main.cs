@@ -6,16 +6,11 @@ using Pie.ShaderCompiler;
 using Pie.Utils;
 using Pie.Windowing;
 
-namespace HelloQuad;
+namespace PieSamples;
 
-public class MainWindow : IDisposable
+public class Main : SampleApplication
 {
-    private WindowSettings _settings;
-
-    private Window _window;
-    private GraphicsDevice _device;
-
-    private readonly VertexPositionColor[] _vertices = new[]
+    private readonly VertexPositionColor[] _vertices =
     {
         new VertexPositionColor(new Vector3(0.5f, 0.5f, 0), new Vector4(1, 0, 0, 1)),
         new VertexPositionColor(new Vector3(0.5f, -0.5f, 0), new Vector4(0, 1, 0, 1)),
@@ -23,7 +18,7 @@ public class MainWindow : IDisposable
         new VertexPositionColor(new Vector3(-0.5f, 0.5f, 0), new Vector4(0, 0, 0, 1))
     };
 
-    private readonly uint[] _indices = new[]
+    private readonly uint[] _indices =
     {
         0u, 1u, 3u,
         1u, 2u, 3u
@@ -60,63 +55,38 @@ void main()
     private Shader _shader;
     private InputLayout _inputLayout;
 
-    public MainWindow(WindowSettings settings)
+    public override void Initialize()
     {
-        _settings = settings;
-    }
+        _vertexBuffer = Device.CreateBuffer(BufferType.VertexBuffer, _vertices);
+        _indexBuffer = Device.CreateBuffer(BufferType.IndexBuffer, _indices);
 
-    public void Initialize()
-    {
-        _vertexBuffer = _device.CreateBuffer(BufferType.VertexBuffer, _vertices);
-        _indexBuffer = _device.CreateBuffer(BufferType.IndexBuffer, _indices);
-
-        _shader = _device.CreateCrossPlatformShader(
+        _shader = Device.CreateCrossPlatformShader(
             new ShaderAttachment(ShaderStage.Vertex, VertexShader),
             new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
 
-        _inputLayout = _device.CreateInputLayout(
+        _inputLayout = Device.CreateInputLayout(
             new InputLayoutDescription("aPosition", AttributeType.Vec3),
             new InputLayoutDescription("aColor", AttributeType.Vec4));
     }
 
-    public void Draw()
+    public override void Draw()
     {
-        _device.Clear(Color.CornflowerBlue);
-        
-        _device.SetShader(_shader);
-        _device.SetPrimitiveType(PrimitiveType.TriangleList);
-        _device.SetVertexBuffer(_vertexBuffer, _inputLayout);
-        _device.SetIndexBuffer(_indexBuffer);
-        _device.Draw((uint) _indices.Length);
+        Device.SetShader(_shader);
+        Device.SetPrimitiveType(PrimitiveType.TriangleList);
+        Device.SetVertexBuffer(_vertexBuffer, _inputLayout);
+        Device.SetIndexBuffer(_indexBuffer);
+        Device.Draw((uint) _indices.Length);
     }
 
-    private void WindowOnResize(Size size)
-    {
-        _device.ResizeSwapchain(size);
-    }
-    
-    public void Run()
-    {
-        _window = Window.CreateWithGraphicsDevice(_settings, out _device);
-        _window.Resize += WindowOnResize;
-        
-        Initialize();
-
-        while (!_window.ShouldClose)
-        {
-            _window.ProcessEvents();
-            Draw();
-            _device.Present(1);
-        }
-    }
-
-    public void Dispose()
+    public override void Dispose()
     {
         _vertexBuffer.Dispose();
         _indexBuffer.Dispose();
         _shader.Dispose();
         _inputLayout.Dispose();
-        _device.Dispose();
-        _window.Dispose();
+        
+        base.Dispose();
     }
+
+    public Main(string title) : base(title) { }
 }
