@@ -9,11 +9,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Silk.NET.Windowing" Version="2.16.0" />
+        <ProjectReference Include="..\..\Common\Common.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Pie\Pie.Extensions.SilkWindowing\Pie.Extensions.SilkWindowing.csproj" />
+      <PackageReference Include="Pie" Version="0.3.2" />
+      <PackageReference Include="Pie.ShaderCompiler" Version="0.3.2" />
+      <PackageReference Include="Pie.Utils" Version="0.3.2" />
+      <PackageReference Include="Pie.Windowing" Version="0.3.2" />
     </ItemGroup>
 
 </Project>

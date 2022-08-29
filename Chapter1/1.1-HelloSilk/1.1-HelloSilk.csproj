@@ -1,24 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <OutputType>Exe</OutputType>
         <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>PieSamples</RootNamespace>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>disable</Nullable>
+        <RootNamespace>PieSamples</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Pie" Version="0.3.2" />
+      <PackageReference Include="Pie.Extensions.SilkWindowing" Version="0.3.2" />
       <PackageReference Include="Pie.ShaderCompiler" Version="0.3.2" />
       <PackageReference Include="Pie.Utils" Version="0.3.2" />
-      <PackageReference Include="Pie.Windowing" Version="0.3.2" />
-      <PackageReference Include="StbImageSharp" Version="2.27.11" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <Content Include="Content/**/*.*">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
+      <PackageReference Include="Silk.NET.Windowing" Version="2.16.0" />
     </ItemGroup>
 
 </Project>
