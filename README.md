@@ -1,2 +1,2 @@
-# Pie.Samples
-Samples for [Pie](https://github.com/IsometricSoftware/Pie), the cross platform graphics toolkit.
+# Learn Pie
+The official Learn Pie repository, based on the [LearnOpenGL](https://learnopengl.com/) tutorials.
