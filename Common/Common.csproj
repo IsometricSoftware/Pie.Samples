@@ -8,11 +8,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Pie" Version="0.3.2" />
-      <PackageReference Include="Pie.ShaderCompiler" Version="0.3.2" />
-      <PackageReference Include="Pie.Utils" Version="0.3.2" />
-      <PackageReference Include="Pie.Windowing" Version="0.3.2" />
-      <PackageReference Include="StbImageSharp" Version="2.27.11" />
+      <PackageReference Include="Pie" Version="0.5.0" />
+      <PackageReference Include="Pie.ShaderCompiler" Version="0.5.0" />
+      <PackageReference Include="Pie.Utils" Version="0.5.0" />
+      <PackageReference Include="Pie.Windowing" Version="0.5.0" />
+      <PackageReference Include="StbImageSharp" Version="2.27.12" />
     </ItemGroup>
 
     <ItemGroup>
