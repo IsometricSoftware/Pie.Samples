@@ -6,7 +6,7 @@ WindowSettings settings = new WindowSettings()
 {
     Size = new Size(1280, 720),
     Title = "Learn Pie: Chapter 1 Part 1 - Basic window",
-    Resizable = true
+    Border = WindowBorder.Resizable
 };
 Window window = Window.CreateWithGraphicsDevice(settings, out GraphicsDevice device);
 window.Resize += size => device.ResizeSwapchain(size);

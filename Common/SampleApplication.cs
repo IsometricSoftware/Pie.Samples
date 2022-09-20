@@ -25,7 +25,7 @@ public class SampleApplication : IDisposable
         {
             Title = title,
             Size = new Size(800, 600),
-            Resizable = true
+            Border = WindowBorder.Resizable
         };
     }
 

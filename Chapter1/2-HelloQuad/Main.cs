@@ -75,7 +75,7 @@ void main()
         Device.SetPrimitiveType(PrimitiveType.TriangleList);
         Device.SetVertexBuffer(_vertexBuffer, _inputLayout);
         Device.SetIndexBuffer(_indexBuffer);
-        Device.Draw((uint) _indices.Length);
+        Device.DrawIndexed((uint) _indices.Length);
     }
 
     public override void Dispose()

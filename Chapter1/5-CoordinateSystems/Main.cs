@@ -112,6 +112,7 @@ void main()
 
     private Texture _texture1;
     private Texture _texture2;
+    private SamplerState _samplerState;
 
     private ProjViewTransform _projViewTransform;
     private GraphicsBuffer _transformBuffer;
@@ -131,13 +132,20 @@ void main()
             new InputLayoutDescription("aPosition", AttributeType.Vec3),
             new InputLayoutDescription("aTexCoords", AttributeType.Vec2));
 
-        Bitmap b1 = new Bitmap(GetFullPath("Content/Textures/container.png"));
-        _texture1 = Device.CreateTexture(b1.Size.Width, b1.Size.Height, PixelFormat.R8G8B8A8_UNorm, b1.Data,
-            TextureSample.Linear, true, 0);
+        TextureDescription textureDesc = new TextureDescription(TextureType.Texture2D, 0, 0, PixelFormat.R8G8B8A8_UNorm,
+            true, 1, TextureUsage.ShaderResource);
         
+        Bitmap b1 = new Bitmap(GetFullPath("Content/Textures/container.png"));
+        textureDesc.Width = b1.Size.Width;
+        textureDesc.Height = b1.Size.Height;
+        _texture1 = Device.CreateTexture(textureDesc, b1.Data);
+
         Bitmap b2 = new Bitmap(GetFullPath("Content/Textures/awesomeface.png"));
-        _texture2 = Device.CreateTexture(b2.Size.Width, b2.Size.Height, PixelFormat.R8G8B8A8_UNorm, b2.Data,
-            TextureSample.Linear, true, 0);
+        textureDesc.Width = b2.Size.Width;
+        textureDesc.Height = b2.Size.Height;
+        _texture2 = Device.CreateTexture(textureDesc, b2.Data);
+
+        _samplerState = Device.CreateSamplerState(SamplerStateDescription.LinearRepeat);
 
         _projViewTransform = new ProjViewTransform();
         _projViewTransform.Projection = Matrix4x4.CreatePerspectiveFieldOfView(45 * (MathF.PI / 180),
@@ -152,8 +160,8 @@ void main()
     {
         Device.SetShader(_shader);
         Device.SetUniformBuffer(0, _transformBuffer);
-        Device.SetTexture(1, _texture1);
-        Device.SetTexture(2, _texture2);
+        Device.SetTexture(1, _texture1, _samplerState);
+        Device.SetTexture(2, _texture2, _samplerState);
         Device.SetDepthState(_depthState);
         Device.SetPrimitiveType(PrimitiveType.TriangleList);
         Device.SetVertexBuffer(_vertexBuffer, _inputLayout);
@@ -166,7 +174,7 @@ void main()
             _projViewTransform.Transform = Matrix4x4.CreateFromQuaternion(Quaternion.Normalize(rotation)) *
                                            Matrix4x4.CreateTranslation(_cubePos[i]);
             Device.UpdateBuffer(_transformBuffer, 0, _projViewTransform);
-            Device.Draw((uint) _indices.Length);
+            Device.DrawIndexed((uint) _indices.Length);
         }
     }
 
