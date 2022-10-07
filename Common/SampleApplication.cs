@@ -74,7 +74,7 @@ public class SampleApplication : IDisposable
         return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + path;
     }
 
-    public bool IsKeyDown(Keys key) => _state.IsKeyDown(key);
+    public bool IsKeyDown(Key key) => _state.IsKeyDown(key);
 
     public Vector2 MousePosition => _state.MousePosition;
     

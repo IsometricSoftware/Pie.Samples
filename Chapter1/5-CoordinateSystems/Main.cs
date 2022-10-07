@@ -128,9 +128,9 @@ void main()
             new ShaderAttachment(ShaderStage.Vertex, VertexShader),
             new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
 
-        _inputLayout = Device.CreateInputLayout(
-            new InputLayoutDescription("aPosition", AttributeType.Vec3),
-            new InputLayoutDescription("aTexCoords", AttributeType.Vec2));
+        _inputLayout = Device.CreateInputLayout(VertexPositionTexture.SizeInBytes,
+            new InputLayoutDescription("aPosition", AttributeType.Float3),
+            new InputLayoutDescription("aTexCoords", AttributeType.Float2));
 
         TextureDescription textureDesc = new TextureDescription(TextureType.Texture2D, 0, 0, PixelFormat.R8G8B8A8_UNorm,
             true, 1, TextureUsage.ShaderResource);
@@ -165,7 +165,7 @@ void main()
         Device.SetDepthState(_depthState);
         Device.SetPrimitiveType(PrimitiveType.TriangleList);
         Device.SetVertexBuffer(_vertexBuffer, _inputLayout);
-        Device.SetIndexBuffer(_indexBuffer);
+        Device.SetIndexBuffer(_indexBuffer, IndexType.UInt);
 
         for (int i = 0; i < _cubePos.Length; i++)
         {

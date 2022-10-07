@@ -89,8 +89,8 @@ void main()
             new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
 
         _inputLayout = Device.CreateInputLayout(VertexPositionTextureNormal.SizeInBytes,
-            new InputLayoutDescription("aPosition", AttributeType.Vec3),
-            new InputLayoutDescription("aTexCoords", AttributeType.Vec2));
+            new InputLayoutDescription("aPosition", AttributeType.Float3),
+            new InputLayoutDescription("aTexCoords", AttributeType.Float2));
 
         TextureDescription textureDesc = new TextureDescription(TextureType.Texture2D, 0, 0, PixelFormat.R8G8B8A8_UNorm,
             true, 1, TextureUsage.ShaderResource);
@@ -125,13 +125,13 @@ void main()
         const float camSpeed = 20;
         const float mouseSpeed = 0.01f;
 
-        if (IsKeyDown(Keys.W))
+        if (IsKeyDown(Key.W))
             _camera.Position += _camera.Forward * camSpeed * dt;
-        if (IsKeyDown(Keys.S))
+        if (IsKeyDown(Key.S))
             _camera.Position -= _camera.Forward * camSpeed * dt;
-        if (IsKeyDown(Keys.A))
+        if (IsKeyDown(Key.A))
             _camera.Position -= _camera.Right * camSpeed * dt;
-        if (IsKeyDown(Keys.D))
+        if (IsKeyDown(Key.D))
             _camera.Position += _camera.Right * camSpeed * dt;
 
         _camera.Rotation.X -= DeltaMousePosition.X * mouseSpeed;
@@ -142,7 +142,7 @@ void main()
         _projViewTransform.Projection = _camera.ProjectionMatrix;
         _projViewTransform.View = _camera.ViewMatrix;
 
-        if (IsKeyDown(Keys.Escape))
+        if (IsKeyDown(Key.Escape))
             Window.ShouldClose = true;
     }
 
@@ -155,7 +155,7 @@ void main()
         Device.SetDepthState(_depthState);
         Device.SetPrimitiveType(PrimitiveType.TriangleList);
         Device.SetVertexBuffer(_vertexBuffer, _inputLayout);
-        Device.SetIndexBuffer(_indexBuffer);
+        Device.SetIndexBuffer(_indexBuffer, IndexType.UInt);
 
         for (int i = 0; i < _cubePos.Length; i++)
         {
