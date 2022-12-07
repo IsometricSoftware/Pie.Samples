@@ -80,22 +80,24 @@ void main()
             new ShaderAttachment(ShaderStage.Vertex, VertexShader),
             new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
 
-        _inputLayout = Device.CreateInputLayout(VertexPositionTexture.SizeInBytes,
-            new InputLayoutDescription("aPosition", AttributeType.Float3),
-            new InputLayoutDescription("aTexCoords", AttributeType.Float3));
+        _inputLayout = Device.CreateInputLayout(
+            new InputLayoutDescription("aPosition", AttributeType.Float3, 0, 0, InputType.PerVertex),
+            new InputLayoutDescription("aTexCoords", AttributeType.Float2, 12, 0, InputType.PerVertex));
 
         TextureDescription textureDesc = new TextureDescription(TextureType.Texture2D, 0, 0, PixelFormat.R8G8B8A8_UNorm,
-            true, 1, TextureUsage.ShaderResource);
+            0, 1, TextureUsage.ShaderResource);
         
         Bitmap b1 = new Bitmap(GetFullPath("Content/Textures/container.png"));
         textureDesc.Width = b1.Size.Width;
         textureDesc.Height = b1.Size.Height;
-        _texture1 = Device.CreateTexture(textureDesc, b1.Data);
+        _texture1 = Device.CreateTexture(textureDesc, new []{ new TextureData(b1.Data) });
+        Device.GenerateMipmaps(_texture1);
 
         Bitmap b2 = new Bitmap(GetFullPath("Content/Textures/awesomeface.png"));
         textureDesc.Width = b2.Size.Width;
         textureDesc.Height = b2.Size.Height;
-        _texture2 = Device.CreateTexture(textureDesc, b2.Data);
+        _texture2 = Device.CreateTexture(textureDesc, new []{ new TextureData(b2.Data) });
+        Device.GenerateMipmaps(_texture2);
 
         _samplerState = Device.CreateSamplerState(SamplerStateDescription.LinearRepeat);
 
@@ -117,7 +119,7 @@ void main()
         Device.SetTexture(1, _texture1, _samplerState);
         Device.SetTexture(2, _texture2, _samplerState);
         Device.SetPrimitiveType(PrimitiveType.TriangleList);
-        Device.SetVertexBuffer(_vertexBuffer, _inputLayout);
+        Device.SetVertexBuffer(0, _vertexBuffer, VertexPositionTexture.SizeInBytes, _inputLayout);
         Device.SetIndexBuffer(_indexBuffer, IndexType.UInt);
         Device.DrawIndexed((uint) _indices.Length);
     }

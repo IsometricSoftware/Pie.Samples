@@ -64,16 +64,16 @@ void main()
             new ShaderAttachment(ShaderStage.Vertex, VertexShader),
             new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
 
-        _inputLayout = Device.CreateInputLayout(VertexPositionColor.SizeInBytes,
-            new InputLayoutDescription("aPosition", AttributeType.Float3),
-            new InputLayoutDescription("aColor", AttributeType.Float3));
+        _inputLayout = Device.CreateInputLayout(
+            new InputLayoutDescription("aPosition", AttributeType.Float3, 0, 0, InputType.PerVertex),
+            new InputLayoutDescription("aColor", AttributeType.Float3, 12, 0, InputType.PerVertex));
     }
 
     public override void Draw(float dt)
     {
         Device.SetShader(_shader);
         Device.SetPrimitiveType(PrimitiveType.TriangleList);
-        Device.SetVertexBuffer(_vertexBuffer, _inputLayout);
+        Device.SetVertexBuffer(0, _vertexBuffer, VertexPositionColor.SizeInBytes, _inputLayout);
         Device.SetIndexBuffer(_indexBuffer, IndexType.UInt);
         Device.DrawIndexed((uint) _indices.Length);
     }
