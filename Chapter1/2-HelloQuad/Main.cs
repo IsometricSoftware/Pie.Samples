@@ -65,8 +65,8 @@ void main()
             new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
 
         _inputLayout = Device.CreateInputLayout(
-            new InputLayoutDescription("aPosition", AttributeType.Float3, 0, 0, InputType.PerVertex),
-            new InputLayoutDescription("aColor", AttributeType.Float3, 12, 0, InputType.PerVertex));
+            new InputLayoutDescription("aPosition", Format.R32G32B32_Float, 0, 0, InputType.PerVertex),
+            new InputLayoutDescription("aColor", Format.R32G32B32_Float, 12, 0, InputType.PerVertex));
     }
 
     public override void Draw(float dt)

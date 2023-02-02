@@ -81,22 +81,22 @@ void main()
             new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
 
         _inputLayout = Device.CreateInputLayout(
-            new InputLayoutDescription("aPosition", AttributeType.Float3, 0, 0, InputType.PerVertex),
-            new InputLayoutDescription("aTexCoords", AttributeType.Float2, 12, 0, InputType.PerVertex));
+            new InputLayoutDescription("aPosition", Format.R32G32B32_Float, 0, 0, InputType.PerVertex),
+            new InputLayoutDescription("aTexCoords", Format.R32G32_Float, 12, 0, InputType.PerVertex));
 
-        TextureDescription textureDesc = new TextureDescription(TextureType.Texture2D, 0, 0, PixelFormat.R8G8B8A8_UNorm,
+        TextureDescription textureDesc = new TextureDescription(TextureType.Texture2D, 0, 0, Format.R8G8B8A8_UNorm,
             0, 1, TextureUsage.ShaderResource);
         
         Bitmap b1 = new Bitmap(GetFullPath("Content/Textures/container.png"));
         textureDesc.Width = b1.Size.Width;
         textureDesc.Height = b1.Size.Height;
-        _texture1 = Device.CreateTexture(textureDesc, new []{ new TextureData(b1.Data) });
+        _texture1 = Device.CreateTexture(textureDesc, b1.Data);
         Device.GenerateMipmaps(_texture1);
 
         Bitmap b2 = new Bitmap(GetFullPath("Content/Textures/awesomeface.png"));
         textureDesc.Width = b2.Size.Width;
         textureDesc.Height = b2.Size.Height;
-        _texture2 = Device.CreateTexture(textureDesc, new []{ new TextureData(b2.Data) });
+        _texture2 = Device.CreateTexture(textureDesc, b2.Data);
         Device.GenerateMipmaps(_texture2);
 
         _samplerState = Device.CreateSamplerState(SamplerStateDescription.LinearRepeat);

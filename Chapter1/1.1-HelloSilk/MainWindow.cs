@@ -22,7 +22,7 @@ public class MainWindow : IDisposable
         // otherwise Pie might not work properly. It expects you to manually swap buffers yourself using Present().
         // Note: If you use PieSilk.CreateWindow, it will disable this for you.
         
-        _window = PieSilk.CreateWindow(options);
+        _window = SilkPie.CreateWindow(ref options);
         _window.Load += Load;
         _window.Render += Render;
         _window.Resize += Resize;
