@@ -92,8 +92,8 @@ void main()
             new InputLayoutDescription("aPosition", Format.R32G32B32_Float, 0, 0, InputType.PerVertex),
             new InputLayoutDescription("aTexCoords", Format.R32G32_Float, 12, 0, InputType.PerVertex));
 
-        TextureDescription textureDesc = new TextureDescription(TextureType.Texture2D, 0, 0, Format.R8G8B8A8_UNorm,
-            0, 1, TextureUsage.ShaderResource);
+        TextureDescription textureDesc =
+            new TextureDescription(0, 0, Format.R8G8B8A8_UNorm, 0, 1, TextureUsage.ShaderResource);
         
         Bitmap b1 = new Bitmap(GetFullPath("Content/Textures/container.png"));
         textureDesc.Width = b1.Size.Width;

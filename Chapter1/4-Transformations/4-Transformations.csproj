@@ -13,10 +13,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Pie" Version="0.6.2" />
-      <PackageReference Include="Pie.ShaderCompiler" Version="0.6.2" />
-      <PackageReference Include="Pie.Utils" Version="0.6.2" />
-      <PackageReference Include="Pie.Windowing" Version="0.6.2" />
+      <PackageReference Include="Pie" Version="0.7.0" />
+      <PackageReference Include="Pie.ShaderCompiler" Version="0.7.0" />
+      <PackageReference Include="Pie.Utils" Version="0.7.0" />
+      <PackageReference Include="Pie.Windowing" Version="0.7.0" />
     </ItemGroup>
 
 </Project>
