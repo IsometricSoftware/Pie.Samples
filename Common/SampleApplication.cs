@@ -67,6 +67,7 @@ public class SampleApplication : IDisposable
     private void WindowOnResize(Size size)
     {
         Device.ResizeSwapchain(size);
+        Device.Viewport = new Rectangle(Point.Empty, size);
     }
 
     public string GetFullPath(string path)

@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "5-CoordinateSystems", "Chap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "6-Camera", "Chapter1\6-Camera\6-Camera.csproj", "{4557C104-88E0-4903-B8FC-3A65282816E7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAudioPlayback", "Samples\SimpleAudioPlayback\SimpleAudioPlayback.csproj", "{419C6E41-48EB-42F7-8B7C-A20B0EBFA71E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,5 +56,9 @@ Global
 		{4557C104-88E0-4903-B8FC-3A65282816E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4557C104-88E0-4903-B8FC-3A65282816E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4557C104-88E0-4903-B8FC-3A65282816E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{419C6E41-48EB-42F7-8B7C-A20B0EBFA71E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{419C6E41-48EB-42F7-8B7C-A20B0EBFA71E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{419C6E41-48EB-42F7-8B7C-A20B0EBFA71E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{419C6E41-48EB-42F7-8B7C-A20B0EBFA71E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

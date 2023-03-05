@@ -84,7 +84,7 @@ void main()
         _vertexBuffer = Device.CreateBuffer(BufferType.VertexBuffer, Cube.Vertices);
         _indexBuffer = Device.CreateBuffer(BufferType.IndexBuffer, Cube.Indices);
 
-        _shader = Device.CreateCrossPlatformShader(
+        _shader = Device.CreateShader(
             new ShaderAttachment(ShaderStage.Vertex, VertexShader),
             new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
 
