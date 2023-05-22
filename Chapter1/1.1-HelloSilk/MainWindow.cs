@@ -31,18 +31,23 @@ public class MainWindow : IDisposable
 
     private void Load()
     {
+        // Create a device on load.
+        // You cannot create it before this method is called!
         _device = _window.CreateGraphicsDevice();
     }
     
     private void Render(double obj)
     {
+        // Clear the swapchain's color buffer to cornflower blue.
         _device.ClearColorBuffer(Color.CornflowerBlue);
         
+        // Present! A swap interval of 1 means that vertical sync is enabled.
         _device.Present(1);
     }
     
     private void Resize(Vector2D<int> obj)
     {
+        // Resize the device swapchain on a window resize. If you don't do this, you may get strange results.
         _device.ResizeSwapchain(new Size(obj.X, obj.Y));
     }
 
@@ -53,11 +58,14 @@ public class MainWindow : IDisposable
     
     private void Closing()
     {
+        // Dispose of the device.
         _device.Dispose();
     }
 
     public void Dispose()
     {
+        // And finally dispose of the window.
+        // You could also put device disposal here, just make sure to dispose it BEFORE window disposal.
         _window.Dispose();
     }
 }
