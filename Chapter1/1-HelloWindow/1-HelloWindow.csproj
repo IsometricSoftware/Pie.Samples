@@ -2,16 +2,16 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>disable</Nullable>
         <RootNamespace>PieSamples</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Pie" Version="0.8.0" />
-      <PackageReference Include="Pie.Utils" Version="0.8.0" />
-      <PackageReference Include="Pie.Windowing" Version="0.8.0" />
+      <PackageReference Include="Pie" Version="0.9.0-alpha.1" />
+      <PackageReference Include="Pie.Utils" Version="0.9.0-alpha.1" />
+      <PackageReference Include="Pie.Windowing" Version="0.9.0-alpha.1" />
     </ItemGroup>
 
 </Project>

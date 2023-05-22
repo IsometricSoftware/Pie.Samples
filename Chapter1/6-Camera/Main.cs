@@ -75,7 +75,7 @@ void main()
     private ProjViewTransform _projViewTransform;
     private GraphicsBuffer _transformBuffer;
 
-    private DepthState _depthState;
+    private DepthStencilState _depthStencilState;
 
     private Camera _camera;
 
@@ -84,13 +84,16 @@ void main()
         _vertexBuffer = Device.CreateBuffer(BufferType.VertexBuffer, Cube.Vertices);
         _indexBuffer = Device.CreateBuffer(BufferType.IndexBuffer, Cube.Indices);
 
-        _shader = Device.CreateShader(
+        _shader = Device.CreateShader(new []
+        {
             new ShaderAttachment(ShaderStage.Vertex, VertexShader),
-            new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
+            new ShaderAttachment(ShaderStage.Fragment, FragmentShader)
+        });
 
         _inputLayout = Device.CreateInputLayout(
-            new InputLayoutDescription("aPosition", Format.R32G32B32_Float, 0, 0, InputType.PerVertex),
-            new InputLayoutDescription("aTexCoords", Format.R32G32_Float, 12, 0, InputType.PerVertex));
+            new InputLayoutDescription(Format.R32G32B32_Float, 0, 0, InputType.PerVertex), // aPosition
+            new InputLayoutDescription(Format.R32G32_Float, 12, 0, InputType.PerVertex) // aTexCoords
+        );
 
         TextureDescription textureDesc =
             new TextureDescription(0, 0, Format.R8G8B8A8_UNorm, 0, 1, TextureUsage.ShaderResource);
@@ -112,12 +115,12 @@ void main()
         _projViewTransform = new ProjViewTransform();
         _transformBuffer = Device.CreateBuffer(BufferType.UniformBuffer, _projViewTransform, true);
 
-        _depthState = Device.CreateDepthState(DepthStateDescription.LessEqual);
+        _depthStencilState = Device.CreateDepthStencilState(DepthStencilStateDescription.LessEqual);
 
         _camera = new Camera(45, Window.Size.Width / (float) Window.Size.Height);
         _camera.Position = new Vector3(0, 0, -3);
 
-        Window.MouseState = MouseState.Locked;
+        Window.CursorMode = CursorMode.Locked;
     }
 
     public override void Update(float dt)
@@ -139,13 +142,13 @@ void main()
         _camera.Rotation.X -= DeltaMousePosition.X * mouseSpeed;
         _camera.Rotation.Y -= DeltaMousePosition.Y * mouseSpeed;
 
-        _camera.Rotation.Y = Clamp(_camera.Rotation.Y, -MathF.PI / 2, MathF.PI / 2);
+        _camera.Rotation.Y = float.Clamp(_camera.Rotation.Y, -MathF.PI / 2, MathF.PI / 2);
 
         _projViewTransform.Projection = _camera.ProjectionMatrix;
         _projViewTransform.View = _camera.ViewMatrix;
 
         if (IsKeyDown(Key.Escape))
-            Window.ShouldClose = true;
+            Close();
     }
 
     public override void Draw(float dt)
@@ -154,7 +157,7 @@ void main()
         Device.SetUniformBuffer(0, _transformBuffer);
         Device.SetTexture(1, _texture1, _samplerState);
         Device.SetTexture(2, _texture2, _samplerState);
-        Device.SetDepthState(_depthState);
+        Device.SetDepthStencilState(_depthStencilState);
         Device.SetPrimitiveType(PrimitiveType.TriangleList);
         Device.SetVertexBuffer(0, _vertexBuffer, VertexPositionTextureNormal.SizeInBytes, _inputLayout);
         Device.SetIndexBuffer(_indexBuffer, IndexType.UInt);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -6,14 +7,15 @@ using System.Numerics;
 using System.Reflection;
 using Pie;
 using Pie.Windowing;
+using Pie.Windowing.Events;
 
 namespace PieSamples;
 
 public class SampleApplication : IDisposable
 {
-    private WindowSettings _settings;
-    private InputState _state;
-    private Vector2 _prevPos;
+    private string _title;
+    private bool _wantsClose;
+    private HashSet<Key> _keysDown;
 
     public Window Window;
 
@@ -21,12 +23,8 @@ public class SampleApplication : IDisposable
     
     public SampleApplication(string title)
     {
-        _settings = new WindowSettings()
-        {
-            Title = title,
-            Size = new Size(800, 600),
-            Border = WindowBorder.Resizable
-        };
+        _title = title;
+        _keysDown = new HashSet<Key>();
     }
 
     public virtual void Initialize() { }
@@ -37,25 +35,54 @@ public class SampleApplication : IDisposable
 
     public void Run()
     {
-        Window = Window.CreateWithGraphicsDevice(_settings, out Device);
-        Window.Resize += WindowOnResize;
+        Window = new WindowBuilder()
+            .Size(800, 600)
+            .Title(_title)
+            .Resizable()
+            .Build(out Device);
 
         Stopwatch dtCounter = Stopwatch.StartNew();
         
         Initialize();
-
-        _state = Window.ProcessEvents();
-
-        while (!Window.ShouldClose)
+        
+        while (!_wantsClose)
         {
-            _prevPos = _state.MousePosition;
-            _state = Window.ProcessEvents();
-            DeltaMousePosition = _state.MousePosition - _prevPos;
+            DeltaMousePosition = Vector2.Zero;
+            
+            while (Window.PollEvent(out IWindowEvent winEvent))
+            {
+                switch (winEvent)
+                {
+                    case QuitEvent:
+                        _wantsClose = true;
+                        break;
+                    case ResizeEvent resize:
+                        WindowOnResize(new Size(resize.Width, resize.Height));
+                        break;
+                    case KeyEvent key:
+                        switch (key.EventType)
+                        {
+                            case WindowEventType.KeyDown:
+                                _keysDown.Add(key.Key);
+                                break;
+                            case WindowEventType.KeyUp:
+                                _keysDown.Remove(key.Key);
+                                break;
+                        }
+
+                        break;
+                    case MouseMoveEvent mouseMove:
+                        MousePosition = new Vector2(mouseMove.MouseX, mouseMove.MouseY);
+                        DeltaMousePosition += new Vector2(mouseMove.DeltaX, mouseMove.DeltaY);
+                        break;
+                }
+            }
 
             float dt = (float) dtCounter.Elapsed.TotalSeconds;
             Update(dt);
 
-            Device.Clear(new Vector4(0.2f, 0.3f, 0.3f, 1.0f), ClearFlags.Depth | ClearFlags.Stencil);
+            Device.ClearColorBuffer(new Vector4(0.2f, 0.3f, 0.3f, 1.0f));
+            Device.ClearDepthStencilBuffer(ClearFlags.Depth | ClearFlags.Stencil, 1.0f, 0);
             Draw(dt);
             
             dtCounter.Restart();
@@ -75,13 +102,13 @@ public class SampleApplication : IDisposable
         return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "/" + path;
     }
 
-    public bool IsKeyDown(Key key) => _state.IsKeyDown(key);
+    public void Close() => _wantsClose = true;
 
-    public Vector2 MousePosition => _state.MousePosition;
+    public bool IsKeyDown(Key key) => _keysDown.Contains(key);
+
+    public Vector2 MousePosition { get; private set; }
     
     public Vector2 DeltaMousePosition { get; private set; }
-
-    public float Clamp(float value, float min, float max) => value <= min ? min : value >= max ? max : value;
 
     public virtual void Dispose()
     {

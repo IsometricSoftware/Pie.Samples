@@ -36,7 +36,7 @@ public class MainWindow : IDisposable
     
     private void Render(double obj)
     {
-        _device.Clear(Color.CornflowerBlue);
+        _device.ClearColorBuffer(Color.CornflowerBlue);
         
         _device.Present(1);
     }

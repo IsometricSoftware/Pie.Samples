@@ -76,13 +76,16 @@ void main()
         _vertexBuffer = Device.CreateBuffer(BufferType.VertexBuffer, _vertices);
         _indexBuffer = Device.CreateBuffer(BufferType.IndexBuffer, _indices);
 
-        _shader = Device.CreateShader(
+        _shader = Device.CreateShader(new []
+        {
             new ShaderAttachment(ShaderStage.Vertex, VertexShader),
-            new ShaderAttachment(ShaderStage.Fragment, FragmentShader));
+            new ShaderAttachment(ShaderStage.Fragment, FragmentShader)
+        });
 
         _inputLayout = Device.CreateInputLayout(
-            new InputLayoutDescription("aPosition", Format.R32G32B32_Float, 0, 0, InputType.PerVertex),
-            new InputLayoutDescription("aTexCoords", Format.R32G32_Float, 12, 0, InputType.PerVertex));
+            new InputLayoutDescription(Format.R32G32B32_Float, 0, 0, InputType.PerVertex), // aPosition
+            new InputLayoutDescription(Format.R32G32_Float, 12, 0, InputType.PerVertex) // aTexCoords
+        );
 
         TextureDescription textureDesc =
             new TextureDescription(0, 0, Format.R8G8B8A8_UNorm, 0, 1, TextureUsage.ShaderResource);

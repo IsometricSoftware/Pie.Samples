@@ -1,21 +1,31 @@
 ﻿using System.Drawing;
 using Pie;
 using Pie.Windowing;
+using Pie.Windowing.Events;
 
-WindowSettings settings = new WindowSettings()
-{
-    Size = new Size(1280, 720),
-    Title = "Learn Pie: Chapter 1 Part 1 - Basic window",
-    Border = WindowBorder.Resizable
-};
-Window window = Window.CreateWithGraphicsDevice(settings, out GraphicsDevice device);
-window.Resize += size => device.ResizeSwapchain(size);
+Window window = new WindowBuilder()
+    .Size(1280, 720)
+    .Title("Learn Pie: Chapter 1 Part 1 - Basic window")
+    .Resizable()
+    .Build(out GraphicsDevice device);
 
-while (!window.ShouldClose)
+bool wantsClose = false;
+while (!wantsClose)
 {
-    window.ProcessEvents();
+    while (window.PollEvent(out IWindowEvent winEvent))
+    {
+        switch (winEvent)
+        {
+            case QuitEvent:
+                wantsClose = true;
+                break;
+            case ResizeEvent resize:
+                device.ResizeSwapchain(new Size(resize.Width, resize.Height));
+                break;
+        }
+    }
     
-    device.Clear(Color.CornflowerBlue);
+    device.ClearColorBuffer(Color.CornflowerBlue);
     
     device.Present(1);
 }
