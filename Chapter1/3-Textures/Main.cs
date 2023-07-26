@@ -81,7 +81,7 @@ void main()
         );
 
         TextureDescription textureDesc =
-            new TextureDescription(0, 0, Format.R8G8B8A8_UNorm, 0, 1, TextureUsage.ShaderResource);
+            TextureDescription.Texture2D(0, 0, Format.R8G8B8A8_UNorm, 0, 1, TextureUsage.ShaderResource);
         
         Bitmap b1 = new Bitmap(GetFullPath("Content/Textures/container.png"));
         textureDesc.Width = b1.Size.Width;
